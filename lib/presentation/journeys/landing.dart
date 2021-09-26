@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:quotey/presentation/journeys/screens/categories_no_bloc.dart';
 import 'package:quotey/presentation/widgets/quotey_app_bar.dart';
 
 import 'package:quotey/utils/constants.dart';
@@ -9,7 +10,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'screens/home_view.dart';
 import 'screens/favorites_view.dart';
 import 'screens/add_quote_view.dart';
-import 'screens/catalog_view.dart';
+import 'screens/categories_view.dart';
 import 'screens/profile_view.dart';
 
 class Landing extends StatefulWidget {
@@ -24,7 +25,8 @@ class _LandingState extends State<Landing> {
     HomeView(),
     FavoritesView(),
     AddQuoteView(),
-    CatalogView(),
+    // CategoriesView(),
+    CategoriesViewNoBloc(),
     ProfileView(),
   ];
 

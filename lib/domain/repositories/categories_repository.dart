@@ -1,4 +1,6 @@
+import 'package:quotey/data/models/category_model.dart';
+
 abstract class CategoriesRepository {
-  Future<List<Category>> getAllCategories();
-  Future<List<Category>> getAllQuotesInCategory({String categoryId});
+  Future<List<CategoryModel>> getAllCategories();
+  Future<List<CategoryModel>> getAllQuotesInCategory({String categoryId});
 }

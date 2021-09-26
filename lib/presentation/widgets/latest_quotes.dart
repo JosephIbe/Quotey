@@ -22,8 +22,8 @@ class _LatestQuotesState extends State<LatestQuotes> {
     return Container(
         width: double.infinity,
         constraints: BoxConstraints(
-          maxHeight: 450.0,
-          minHeight: 420.0,
+          maxHeight: 430.0,
+          minHeight: 400.0,
         ),
         child: BlocBuilder<AllQuotesBloc, AllQuotesState>(
           builder: (context, state) {
@@ -56,13 +56,14 @@ class QuotesList extends StatefulWidget {
 class _QuotesListState extends State<QuotesList> {
 
   var controller = PageController();
+  var currentPage = 0;
 
   @override
   void initState() {
     super.initState();
     controller = PageController(
       viewportFraction: 0.75,
-      initialPage: 0,
+      initialPage: currentPage,
     );
   }
 
@@ -74,11 +75,17 @@ class _QuotesListState extends State<QuotesList> {
       controller: controller,
       reverse: false,
       pageSnapping: true,
+      onPageChanged: (int index) {
+        if(index == widget.quotes.length - 1) {
+          print('has reached last item...fetch more');
+          AppLoader(text: 'Fetching More Quotes',);
+        }
+      },
       itemBuilder: (context, index) => Padding(
         padding: EdgeInsets.only(right: 15.0),
         child: QuoteItem(
           text: widget.quotes[index].content,
-          author: widget.quotes[index].author
+          author: widget.quotes[index].author,
         ),
       ),
     );

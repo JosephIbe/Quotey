@@ -20,4 +20,8 @@ class AllQuotesStateSuccess extends AllQuotesState {
 class AllQuotesStateFailure extends AllQuotesState {
   final String errorMessage;
   AllQuotesStateFailure({@required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+
 }

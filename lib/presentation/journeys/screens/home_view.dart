@@ -26,8 +26,8 @@ class HomeView extends StatelessWidget {
             children: [
               SectionTitle(text: 'Latest'),
               LatestQuotes(),
-              SectionTitle(text: 'Mine'),
-              MyQuotes(),
+              // SectionTitle(text: 'Mine'),
+              // MyQuotes(),
             ],
           ),
         ),

@@ -71,6 +71,15 @@ var kErrorTextStyle = GoogleFonts.openSans(
     )
 );
 
+var kQuoteTagTextStyle = GoogleFonts.montserrat(
+  textStyle: TextStyle(
+    color: Colors.white70,
+    fontSize: 15.0,
+    fontStyle: FontStyle.italic,
+    fontWeight: FontWeight.bold,
+  )
+);
+
 /**
  *  Text Input Decors
  * **/

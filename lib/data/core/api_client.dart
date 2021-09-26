@@ -5,9 +5,9 @@ import 'package:quotey/data/core/api_constants.dart';
 
 class APIClient {
 
-  dynamic getAllQuotes() async {
+  dynamic get({String path}) async {
     try {
-      Response response = await Dio().get(APIConstants.API_BASE_URL);
+      Response response = await Dio().get(APIConstants.API_BASE_URL + path);
       // print('API Response\t$response');
       if (response.statusCode == 200) {
         return response.data;

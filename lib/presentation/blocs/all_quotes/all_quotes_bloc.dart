@@ -25,7 +25,6 @@ class AllQuotesBloc extends Bloc<AllQuotesEvent, AllQuotesState> {
     yield AllQuotesStateLoading();
     try {
       var quotes = await _repository.getAllQuotes();
-      print(quotes);
       if(quotes.isNotEmpty) {
         yield AllQuotesStateSuccess(quotesList: quotes);
       } else {
