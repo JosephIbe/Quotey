@@ -3,6 +3,7 @@
  * **/
 
 const String homeRoute = '/home';
+const String categoryQuotesRoute = '/quotes-in-category';
 
 const String faqsRoute = '/faqs';
 const String policyRoute = '/privacy-policy';

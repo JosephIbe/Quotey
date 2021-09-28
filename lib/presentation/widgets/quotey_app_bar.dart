@@ -5,8 +5,9 @@ class QuoteyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final Color color;
   final double height;
+  final String title;
 
-  QuoteyAppBar({@required this.height, @required this.color});
+  QuoteyAppBar({@required this.height, @required this.color, @required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class QuoteyAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             Container(
               alignment: Alignment.bottomCenter,
-              child: Text("Quotey", style: kAppNameTextStyle, ),
+              child: Text(title, style: kAppNameTextStyle, ),
             )
           ],
         ),

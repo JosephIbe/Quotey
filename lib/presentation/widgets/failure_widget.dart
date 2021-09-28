@@ -12,13 +12,13 @@ class FailureWidget extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       color: Colors.white,
-      width: 250.0,
-      height: 250.0,
+      width: double.infinity,
+      height: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset('', height: 100.0, ),
+          Image.asset('assets/no-philosophers.gif', height: 100.0, ),
           Text(reason, style: kErrorTextStyle,)
         ],
       ),

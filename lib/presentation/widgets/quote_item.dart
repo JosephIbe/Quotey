@@ -31,14 +31,30 @@ class QuoteItem extends StatelessWidget {
               size: 290.0,
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                        size: 40.0,
+                      ),
+                      onPressed: ()=>{},
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .05,
+                ),
                 Text(
                   text,
                   style: kQuoteTextStyle,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * .15,
+                  height: MediaQuery.of(context).size.height * .1,
                 ),
                 Row(
                   children: [

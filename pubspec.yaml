@@ -34,11 +34,14 @@ dependencies:
   google_fonts: any
   get_it: ^4.0.2
   pedantic: any
-  animated_text_kit: ^3.1.2
-  flutter_spinkit: ^4.1.2
   bottom_navy_bar: ^5.6.0
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
+  path_provider: ^2.0.1
 
 dev_dependencies:
+  hive_generator: ^1.0.0
+  build_runner: ^1.11.5
   flutter_test:
     sdk: flutter
 

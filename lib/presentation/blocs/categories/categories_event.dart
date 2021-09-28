@@ -8,13 +8,3 @@ abstract class CategoriesEvent extends Equatable {
 }
 
 class GetAllCategoriesEvent extends CategoriesEvent {}
-
-class GetQuotesInCategoryEvent extends CategoriesEvent {
-
-  final String categoryId;
-  GetQuotesInCategoryEvent({@required this.categoryId});
-
-  @override
-  List<Object> get props => [categoryId];
-
-}

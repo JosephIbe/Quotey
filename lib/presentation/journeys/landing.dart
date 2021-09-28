@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:quotey/presentation/journeys/screens/categories_no_bloc.dart';
+import 'package:quotey/presentation/journeys/screens/categories_view.dart';
 import 'package:quotey/presentation/widgets/quotey_app_bar.dart';
 
 import 'package:quotey/utils/constants.dart';
@@ -24,17 +24,20 @@ class _LandingState extends State<Landing> {
   var _screens = [
     HomeView(),
     FavoritesView(),
-    AddQuoteView(),
-    // CategoriesView(),
-    CategoriesViewNoBloc(),
-    ProfileView(),
+    AuthorsView(),
+    CategoriesView(),
+    SettingsView(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: QuoteyAppBar(height: 75.0, color: Colors.primaries[Random().nextInt(Colors.primaries.length)],),
+        appBar: QuoteyAppBar(
+          title: "Quotey",
+          height: 75.0,
+          color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+        ),
         body: _screens[currentIndex],
         bottomNavigationBar: BottomNavyBar(
           selectedIndex: currentIndex,
@@ -58,7 +61,7 @@ class _LandingState extends State<Landing> {
             ),
             BottomNavyBarItem(
                 icon: Icon(Icons.add_box_rounded),
-                title: Text('Create'),
+                title: Text('Authors'),
                 activeColor: Colors.black,
                 inactiveColor: Colors.grey
             ),
@@ -69,8 +72,8 @@ class _LandingState extends State<Landing> {
                 inactiveColor: Colors.grey
             ),
             BottomNavyBarItem(
-                icon: Icon(Icons.person),
-                title: Text('Profile'),
+                icon: Icon(Icons.settings),
+                title: Text('Settings'),
                 activeColor: Colors.black,
                 inactiveColor: Colors.grey
             ),

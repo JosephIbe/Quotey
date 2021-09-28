@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 double w, h;
 
-class ProfileView extends StatelessWidget {
+class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class ProfileView extends StatelessWidget {
         width: w,
         height: h,
         child: Center(
-          child: Text('Profile View'),
+          child: Text('Settings View'),
         ),
       ),
     );

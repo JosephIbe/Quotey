@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 double w, h;
 
-class AddQuoteView extends StatelessWidget {
+class AuthorsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
@@ -14,7 +14,7 @@ class AddQuoteView extends StatelessWidget {
         width: w,
         height: h,
         child: Center(
-          child: Text('Add Quote View'),
+          child: Text('Authors View'),
         ),
       ),
     );

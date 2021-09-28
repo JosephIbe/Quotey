@@ -21,6 +21,7 @@ class _LatestQuotesState extends State<LatestQuotes> {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
+        margin: EdgeInsets.symmetric(vertical: 40.0),
         constraints: BoxConstraints(
           maxHeight: 430.0,
           minHeight: 400.0,
@@ -62,7 +63,7 @@ class _QuotesListState extends State<QuotesList> {
   void initState() {
     super.initState();
     controller = PageController(
-      viewportFraction: 0.75,
+      viewportFraction: 0.85,
       initialPage: currentPage,
     );
   }
@@ -75,12 +76,6 @@ class _QuotesListState extends State<QuotesList> {
       controller: controller,
       reverse: false,
       pageSnapping: true,
-      onPageChanged: (int index) {
-        if(index == widget.quotes.length - 1) {
-          print('has reached last item...fetch more');
-          AppLoader(text: 'Fetching More Quotes',);
-        }
-      },
       itemBuilder: (context, index) => Padding(
         padding: EdgeInsets.only(right: 15.0),
         child: QuoteItem(
