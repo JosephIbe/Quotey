@@ -11,8 +11,8 @@ class AppLoader extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       color: Colors.white,
-      width: 250.0,
-      height: 250.0,
+      width: double.infinity,
+      height: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

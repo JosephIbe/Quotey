@@ -1,7 +1,7 @@
 import 'dart:core';
 import 'package:hive/hive.dart';
 
-part 'quotes_model.g.dart';
+// part 'quotes_model.g.dart';
 
 /// tags : ["famous-quotes","inspirational"]
 /// _id : "2xpHvSOQMD"
@@ -12,31 +12,23 @@ part 'quotes_model.g.dart';
 /// dateAdded : "2021-06-18"
 /// dateModified : "2021-06-18"
 
-@HiveType(typeId: 0)
+// @HiveType(typeId: 0)
 class QuotesModel {
 
-  @HiveField(0)
   List<String> tags;
 
-  @HiveField(1)
   String id;
 
-  @HiveField(2)
   String author;
 
-  @HiveField(3)
   String content;
 
-  @HiveField(4)
   String authorSlug;
 
-  @HiveField(5)
   int length;
 
-  @HiveField(6)
   String dateAdded;
 
-  @HiveField(7)
   String dateModified;
 
   QuotesModel({

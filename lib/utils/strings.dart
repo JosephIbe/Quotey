@@ -4,6 +4,7 @@
 
 const String homeRoute = '/home';
 const String categoryQuotesRoute = '/quotes-in-category';
+const String authorQuotesRoute = '/quotes-by-author';
 
 const String faqsRoute = '/faqs';
 const String policyRoute = '/privacy-policy';

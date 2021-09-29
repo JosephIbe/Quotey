@@ -9,9 +9,9 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 import 'screens/home_view.dart';
 import 'screens/favorites_view.dart';
-import 'screens/add_quote_view.dart';
+import 'screens/authors_view.dart';
 import 'screens/categories_view.dart';
-import 'screens/profile_view.dart';
+import 'screens/settings_view.dart';
 
 class Landing extends StatefulWidget {
   @override
@@ -60,7 +60,7 @@ class _LandingState extends State<Landing> {
                 inactiveColor: Colors.grey
             ),
             BottomNavyBarItem(
-                icon: Icon(Icons.add_box_rounded),
+                icon: Icon(Icons.person),
                 title: Text('Authors'),
                 activeColor: Colors.black,
                 inactiveColor: Colors.grey

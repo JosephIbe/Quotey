@@ -79,8 +79,7 @@ class _QuotesListState extends State<QuotesList> {
       itemBuilder: (context, index) => Padding(
         padding: EdgeInsets.only(right: 15.0),
         child: QuoteItem(
-          text: widget.quotes[index].content,
-          author: widget.quotes[index].author,
+          quote: widget.quotes[index],
         ),
       ),
     );

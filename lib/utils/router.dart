@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quotey/presentation/journeys/screens/author_quotes_view.dart';
 import 'package:quotey/presentation/journeys/screens/category_quotes_view.dart';
 import 'package:quotey/presentation/journeys/screens/home_view.dart';
 import 'package:quotey/utils/strings.dart';
@@ -10,7 +11,13 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => HomeView());
         break;
       case categoryQuotesRoute:
-        return MaterialPageRoute(builder: (_) => CategoryQuotesView(categoryName: settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) =>
+                CategoryQuotesView(categoryName: settings.arguments));
+      case authorQuotesRoute:
+        return MaterialPageRoute(
+            builder: (_) =>
+                AuthorQuotesView(author: settings.arguments));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

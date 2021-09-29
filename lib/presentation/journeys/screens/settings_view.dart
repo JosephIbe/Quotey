@@ -14,8 +14,8 @@ class SettingsView extends StatelessWidget {
       body: Container(
         width: w,
         height: h,
-        child: Center(
-          child: Text('Settings View'),
+        child: ListView(
+          children: [],
         ),
       ),
     );

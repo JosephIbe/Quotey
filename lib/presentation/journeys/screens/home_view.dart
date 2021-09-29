@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:quotey/presentation/widgets/latest_quotes.dart';
-import 'package:quotey/presentation/widgets/my_quotes.dart';
-import 'package:quotey/presentation/widgets/section_title.dart';
 
 double w, h;
 

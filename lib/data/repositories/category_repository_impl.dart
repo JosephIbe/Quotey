@@ -16,10 +16,4 @@ class CategoryRepositoryImpl extends CategoriesRepository {
     return await dataSource.getAllCategories();
   }
 
-  @override
-  Future<List<CategoryModel>> getAllQuotesInCategory({String categoryId}) {
-    // TODO: implement getAllQuotesInCategory
-    throw UnimplementedError();
-  }
-
 }
