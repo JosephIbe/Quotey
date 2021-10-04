@@ -76,12 +76,14 @@ class _QuotesListState extends State<QuotesList> {
       controller: controller,
       reverse: false,
       pageSnapping: true,
-      itemBuilder: (context, index) => Padding(
-        padding: EdgeInsets.only(right: 15.0),
-        child: QuoteItem(
-          quote: widget.quotes[index],
-        ),
-      ),
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.only(right: 15.0),
+          child: QuoteItem(
+            quote: widget.quotes[index],
+          ),
+        );
+      }
     );
   }
 

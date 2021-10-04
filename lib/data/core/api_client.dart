@@ -1,13 +1,25 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+
 import 'package:quotey/data/core/api_constants.dart';
 
 class APIClient {
 
   dynamic get({String path}) async {
+
+    final Dio dio = Dio();
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
+
     try {
-      Response response = await Dio().get(APIConstants.API_BASE_URL + path);
+      Response response = await dio.get(APIConstants.API_BASE_URL + path);
       // print('API Response\t$response');
       if (response.statusCode == 200) {
         return response.data;

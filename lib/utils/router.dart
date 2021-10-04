@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quotey/presentation/journeys/screens/author_quotes_view.dart';
 import 'package:quotey/presentation/journeys/screens/category_quotes_view.dart';
 import 'package:quotey/presentation/journeys/screens/home_view.dart';
+import 'package:quotey/presentation/journeys/screens/policy_view.dart';
 import 'package:quotey/utils/strings.dart';
 
 class AppRouter {
@@ -18,6 +19,8 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) =>
                 AuthorQuotesView(author: settings.arguments));
+      case policyRoute:
+        return MaterialPageRoute(builder: (_) => PolicyView());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

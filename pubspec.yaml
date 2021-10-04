@@ -36,8 +36,10 @@ dependencies:
   pedantic: any
   bottom_navy_bar: ^5.6.0
   hive: ^2.0.4
-  hive_flutter: ^1.1.0
-  path_provider: ^2.0.1
+#  hive_flutter: any
+  path_provider: any
+  toast: ^0.1.5
+  share_plus: ^2.2.0
 
 dev_dependencies:
   hive_generator: ^1.0.0

@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 
 import 'package:quotey/data/models/quotes_model.dart';
+import 'package:quotey/domain/entities/quotes_entity.dart';
 
 part 'quotes_table.g.dart';
 
@@ -31,7 +32,6 @@ class QuotesTable extends QuotesModel {
     id = json["_id"];
     author = json["author"];
     content = json["content"];
-    authorSlug = json["authorSlug"];
   }
 
   Map<String, dynamic> toJson() {

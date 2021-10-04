@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:hive/hive.dart';
+import 'package:quotey/domain/entities/quotes_entity.dart';
 
 // part 'quotes_model.g.dart';
 
@@ -12,44 +13,45 @@ import 'package:hive/hive.dart';
 /// dateAdded : "2021-06-18"
 /// dateModified : "2021-06-18"
 
-// @HiveType(typeId: 0)
-class QuotesModel {
+class QuotesModel extends QuotesEntity {
 
-  List<String> tags;
+  final List<String> tags;
 
-  String id;
+  final String id;
 
-  String author;
+  final String author;
 
-  String content;
+  final String content;
 
-  String authorSlug;
+  final String authorSlug;
 
-  int length;
+  final int length;
 
-  String dateAdded;
+  final String dateAdded;
 
-  String dateModified;
+  final String dateModified;
 
-  QuotesModel({
-    this.tags,
-    this.id,
-    this.author,
-    this.content,
-    this.authorSlug,
-    this.length,
-    this.dateAdded,
-    this.dateModified});
+  QuotesModel(
+      {this.tags,
+      this.id,
+      this.author,
+      this.content,
+      this.authorSlug,
+      this.length,
+      this.dateAdded,
+      this.dateModified})
+      : super(tags: tags, id: id, author: author, content: content);
 
-  QuotesModel.fromJson(dynamic json) {
-    tags = json["tags"] != null ? json["tags"].cast<String>() : [];
-    id = json["_id"];
-    author = json["author"];
-    content = json["content"];
-    authorSlug = json["authorSlug"];
-    length = json["length"];
-    dateAdded = json["dateAdded"];
-    dateModified = json["dateModified"];
+  factory QuotesModel.fromJson(dynamic json) {
+    return QuotesModel(
+        tags: json["tags"] != null ? json["tags"].cast<String>() : [],
+        id: json["_id"],
+        author: json["author"],
+        content: json['content'],
+        authorSlug: json["authorSlug"],
+        length: json["length"],
+        dateAdded: json["dateAdded"],
+        dateModified: json["dateModified"]);
   }
 
   Map<String, dynamic> toJson() {

@@ -23,6 +23,7 @@ import 'package:quotey/presentation/blocs/categories/categories_bloc.dart';
 import 'package:quotey/presentation/blocs/categories/categories_event.dart';
 
 import 'package:quotey/presentation/journeys/landing.dart';
+import 'package:quotey/presentation/themes/app_colors.dart';
 
 import 'package:quotey/utils/router.dart';
 
@@ -33,7 +34,6 @@ import 'package:pedantic/pedantic.dart';
 import 'di/get_it.dart' as getIt;
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   unawaited(getIt.init());
 
@@ -45,57 +45,63 @@ void main() async {
   await Hive.openBox<QuotesModel>('favorite-quotes');
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((value) => runApp(
-      MultiRepositoryProvider(
-          providers: [
-            RepositoryProvider<AllQuotesRepository>(
-              create: (_)=> AllQuotesRepositoryImpl(dataSource: getIt.getItInstance()),
-            ),
-            RepositoryProvider<CategoriesRepository>(
-              create: (_) => CategoryRepositoryImpl(dataSource: getIt.getItInstance()),
-            ),
-            RepositoryProvider<AuthorsRepository>(
-              create: (_) => AuthorsRepositoryImpl(dataSource: getIt.getItInstance()),
-            ),
-          ],
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider<AllQuotesBloc>(
-                create: (context) {
-                  final repo = context.read<AllQuotesRepository>();
-                  return AllQuotesBloc(repo)..add(GetAllQuotesEvent());
-                },
-              ),
-              BlocProvider<CategoriesBloc>(
-                create: (context){
-                  final repo = context.read<CategoriesRepository>();
-                  return CategoriesBloc(repo)..add(GetAllCategoriesEvent());
-                },
-              ),
-              BlocProvider<AuthorsBloc>(
-                create: (context){
-                  final repo = context.read<AuthorsRepository>();
-                  return AuthorsBloc(repo)..add(GetAllAuthorsEvent());
-                },
-              ),
-            ],
-            child: Quotey(),
+      .then((value) => runApp(MultiRepositoryProvider(
+              providers: [
+                RepositoryProvider<AllQuotesRepository>(
+                  create: (_) => AllQuotesRepositoryImpl(
+                      dataSource: getIt.getItInstance()),
+                ),
+                RepositoryProvider<CategoriesRepository>(
+                  create: (_) =>
+                      CategoryRepositoryImpl(dataSource: getIt.getItInstance()),
+                ),
+                RepositoryProvider<AuthorsRepository>(
+                  create: (_) =>
+                      AuthorsRepositoryImpl(dataSource: getIt.getItInstance()),
+                ),
+              ],
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider<AllQuotesBloc>(
+                    create: (context) {
+                      final repo = context.read<AllQuotesRepository>();
+                      return AllQuotesBloc(repo)..add(GetAllQuotesEvent());
+                    },
+                  ),
+                  BlocProvider<CategoriesBloc>(
+                    create: (context) {
+                      final repo = context.read<CategoriesRepository>();
+                      return CategoriesBloc(repo)..add(GetAllCategoriesEvent());
+                    },
+                  ),
+                  BlocProvider<AuthorsBloc>(
+                    create: (context) {
+                      final repo = context.read<AuthorsRepository>();
+                      return AuthorsBloc(repo)..add(GetAllAuthorsEvent());
+                    },
+                  ),
+                ],
+                child: Quotey(),
+              )
+            )
           )
-      )
-  ));
+      );
 }
 
 class Quotey extends StatelessWidget {
+
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Quotey',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      // theme: ThemeData(
+      //   primarySwatch: AppColors.milk,
+      //   scaffoldBackgroundColor: AppColors.milk,
+      //   visualDensity: VisualDensity.adaptivePlatformDensity,
+      // ),
       onGenerateRoute: AppRouter.generateRoute,
       home: Landing(),
     );
