@@ -6,8 +6,8 @@ import 'package:quotey/data/models/quotes_model.dart';
 import 'package:quotey/data/models/quotes_response_model.dart';
 
 abstract class QuotesRemoteDataSource {
-  Future<List<QuotesModel>> getAllQuotes();
-  Future<List<QuotesModel>> getQuotesInCategory({String categoryName});
+  Future<List<QuotesModel>> getAllQuotes({int page});
+  Future<List<QuotesModel>> getQuotesInCategory({String categoryName, int page});
 }
 
 class QuotesRemoteDataSourceImpl extends QuotesRemoteDataSource {
@@ -18,16 +18,15 @@ class QuotesRemoteDataSourceImpl extends QuotesRemoteDataSource {
   List<QuotesModel> _allQuotes = [];
 
   @override
-  Future<List<QuotesModel>> getAllQuotes() async {
-    final response = await client.get(path: '/quotes');
+  Future<List<QuotesModel>> getAllQuotes({int page}) async {
+    final response = await client.get(path: '/quotes', page: page.toString());
     _allQuotes = QuotesResponseModel.fromJson(response).results;
     return _allQuotes;
   }
 
   @override
-  Future<List<QuotesModel>> getQuotesInCategory({String categoryName}) async {
-    final response = await client.get(path: '/quotes?tags=$categoryName');
-    print(response);
+  Future<List<QuotesModel>> getQuotesInCategory({String categoryName, int page}) async {
+    final response = await client.get(path: '/quotes?tags=$categoryName?page=$page');
     _allQuotes = QuotesResponseModel.fromJson(response).results;
     return _allQuotes;
   }

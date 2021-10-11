@@ -1,24 +1,23 @@
 import 'dart:io';
-import 'dart:ui' as ui;
 import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:quotey/data/models/quotes_model.dart';
 
 import 'package:quotey/utils/constants.dart';
 
-import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:toast/toast.dart';
 
 class QuoteItem extends StatefulWidget {
-
   final QuotesModel quote;
+
   QuoteItem({@required this.quote});
 
   @override
@@ -27,73 +26,82 @@ class QuoteItem extends StatefulWidget {
 
 class _QuoteItemState extends State<QuoteItem> {
 
-  Box box;
   Color color = Colors.primaries[Random().nextInt(Colors.primaries.length)];
 
   final GlobalKey genKey = GlobalKey();
 
+  final controller = ScreenshotController();
+
+  var isQuotePlaying;
+
+  @override
+  void initState() {
+    super.initState();
+    isQuotePlaying = false;
+  }
+
   @override
   Widget build(BuildContext context) {
 
-    box = Hive.box<QuotesModel>('favorite-quotes');
-
     return GestureDetector(
         onTap: () => {
-          setState(() => color =
-          Colors.primaries[Random().nextInt(Colors.primaries.length)])
-        },
+              setState(() => color =
+                  Colors.primaries[Random().nextInt(Colors.primaries.length)])
+            },
         child: Card(
-          color: color,
-          elevation: 4.0,
-          shadowColor: color,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-          ),
-          child: Container(
-              margin: EdgeInsets.all(8.0),
+            color: color,
+            elevation: 4.0,
+            shadowColor: color,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            ),
+            child: Container(
+              margin: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               height: MediaQuery.of(context).size.height * 0.72,
               decoration: BoxDecoration(
                 color: color,
               ),
-              child: Stack(
-                children: [
-                  Icon(
-                    Icons.format_quote_sharp,
-                    color: Colors.white70.withOpacity(0.4),
-                    size: 350.0,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+              child: Column(
+                  children: [
+                    Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                        size: 40.0,
+                      ),
+                      onPressed: () => {},
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: Colors.white,
+                        size: 40.0,
+                      ),
+                      onPressed: () => openSheet(context, widget.quote),
+                    ),
+                  ],
+                ),
+                    SizedBox( height: MediaQuery.of(context).size.height * .05, ),
+                    Screenshot(
+                      controller: controller,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: color,
+                        ),
+                        child: Stack(
                           children: [
-                            IconButton(
-                              icon: Icon(
-                                box.values.toList().contains(widget.quote.id) ? Icons.favorite : Icons.favorite_border,
-                                color: box.values.toList().contains(widget.quote) ? Colors.red : Colors.white,
-                                size: 40.0,
-                              ),
-                              onPressed: () => saveQuote(widget.quote),
+                            Icon(
+                              Icons.format_quote_sharp,
+                              color: Colors.white70.withOpacity(0.4),
+                              size: 290.0,
                             ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.more_vert,
-                                color: Colors.white,
-                                size: 40.0,
-                              ),
-                              onPressed: () => openSheet(context, widget.quote),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * .05,
-                        ),
-                        RepaintBoundary(
-                            key: genKey,
-                            child: Column(
+                            Column(
                               children: [
+                                SizedBox(height: 20.0,),
                                 Text(
                                   widget.quote.content ?? 'Empty Quote',
                                   style: kQuoteTextStyle,
@@ -134,36 +142,19 @@ class _QuoteItemState extends State<QuoteItem> {
                                       ),
                                     ],
                                   ),
-                                ),
+                                )
                               ],
                             )
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  )
-                ],
-              )
-          ),
+                  ]
+            ),
+
+            )
         )
     );
-
-  }
-
-  saveQuote(QuotesModel quoteToSave) async {
-    if (!box.values.toList().contains(quoteToSave)) {
-      box.put(quoteToSave.id, quoteToSave);
-
-      if (box.values.toList().contains(quoteToSave)) {
-        Toast.show(
-          'Added to Favorites',
-          context,
-          gravity: Toast.CENTER,
-          duration: Toast.LENGTH_LONG,
-          backgroundColor: Colors.lightGreen
-        );
-      }
-
-    }
   }
 
   openSheet(BuildContext context, QuotesModel quote) {
@@ -173,54 +164,52 @@ class _QuoteItemState extends State<QuoteItem> {
       elevation: 4.0,
       backgroundColor: color,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(15.0),
-          topLeft: Radius.circular(15.0),
-        )
-      ),
+          borderRadius: BorderRadius.only(
+        topRight: Radius.circular(15.0),
+        topLeft: Radius.circular(15.0),
+      )),
       builder: (context) {
         return Container(
-          height: 180.0,
+          height: 200.0,
           padding: EdgeInsets.all(5.0),
           child: Column(
             children: [
               ListTile(
-                  onTap: ()=> copyToClipBoard(context, quote),
+                  onTap: () => copyToClipBoard(context, quote),
                   title: Row(
                     children: [
                       Icon(Icons.copy, color: Colors.white),
-                      SizedBox(width: 20.0,),
-                      Text('Copy Text', style: kBottomSheetTextStyle,),
+                      SizedBox(
+                        width: 20.0,
+                      ),
+                      Text(
+                        'Copy Text',
+                        style: kBottomSheetTextStyle,
+                      ),
                     ],
-                  )
-              ),
-              // ListTile(
-              //   onTap: ()=>{},
-              //   title: Row(
-              //     children: [
-              //       Icon(Icons.share, color: Colors.white),
-              //       SizedBox(width: 20.0,),
-              //       Text('Share As Text', style: kBottomSheetTextStyle,),
-              //     ],
-              //   ),
-              // ),
+                  )),
               ListTile(
-                onTap: ()=> takeQuotePicture(quote),
+                onTap: ()=> shareQuoteAsText(quote),
                 title: Row(
                   children: [
                     Icon(Icons.share, color: Colors.white),
                     SizedBox(width: 20.0,),
-                    Text('Share As Image', style: kBottomSheetTextStyle,),
+                    Text('Share As Text', style: kBottomSheetTextStyle,),
                   ],
                 ),
               ),
               ListTile(
-                onTap: ()=>{},
+                onTap: () => takeQuotePicture(quote),
                 title: Row(
                   children: [
-                    Icon(Icons.download_sharp, color: Colors.white),
-                    SizedBox(width: 20.0,),
-                    Text('Download', style: kBottomSheetTextStyle,),
+                    Icon(Icons.share, color: Colors.white),
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    Text(
+                      'Share As Image',
+                      style: kBottomSheetTextStyle,
+                    ),
                   ],
                 ),
               ),
@@ -247,22 +236,40 @@ class _QuoteItemState extends State<QuoteItem> {
 
   Future<void> takeQuotePicture(QuotesModel quote) async {
 
-    RenderRepaintBoundary boundary = genKey.currentContext.findRenderObject();
-    ui.Image image = await boundary.toImage();
+    controller.capture(pixelRatio: 2.5, delay: const Duration(milliseconds: 10))
+              .then((Uint8List image) async {
 
-    final directory = (await getApplicationDocumentsDirectory()).path;
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List pngBytes = byteData.buffer.asUint8List();
+              final directory = await (getApplicationDocumentsDirectory());
+              String path = directory.path;
+              File imgFile = File('$path/${quote.content.substring(0, 10)} + photo.png');
+              await imgFile.writeAsBytes(image);
+              //
+              Share.shareFiles([imgFile.path.toString()]);
+    });
 
-    File imgFile = File('$directory/${quote.content.substring(0, 10)} + photo.png');
-    await imgFile.writeAsBytes(pngBytes);
-
-    Share.shareFiles([imgFile.path.toString()]);
-
-    print(imgFile.path);
+    // RenderRepaintBoundary boundary = genKey.currentContext.findRenderObject();
+    // ui.Image image = await boundary.toImage();
+    //
+    // final directory = (await getApplicationDocumentsDirectory()).path;
+    // ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    // Uint8List pngBytes = byteData.buffer.asUint8List();
+    //
+    // File imgFile =
+    //     File('$directory/${quote.content.substring(0, 10)} + photo.png');
+    // await imgFile.writeAsBytes(pngBytes);
+    //
+    // Share.shareFiles([imgFile.path.toString()]);
+    //
+    // print(imgFile.path);
 
     Navigator.pop(context);
+  }
 
+  shareQuoteAsText(QuotesModel quote) {
+    Share.share(
+      quote.content,
+      subject: 'Check out this quote from this author:\t ${quote.author} in this category ${quote.tags}'
+    );
   }
 
 }

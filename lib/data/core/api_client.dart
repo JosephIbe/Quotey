@@ -8,7 +8,7 @@ import 'package:quotey/data/core/api_constants.dart';
 
 class APIClient {
 
-  dynamic get({String path}) async {
+  dynamic get({String path, String page, String limit}) async {
 
     final Dio dio = Dio();
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
@@ -19,7 +19,9 @@ class APIClient {
     };
 
     try {
-      Response response = await dio.get(APIConstants.API_BASE_URL + path);
+      var url = APIConstants.API_BASE_URL + path + '?page=$page';
+      Response response = await dio.get(url);
+      print('url in client:\n $url');
       // print('API Response\t$response');
       if (response.statusCode == 200) {
         return response.data;
@@ -27,8 +29,6 @@ class APIClient {
         throw Exception(response.statusMessage);
       }
     } on DioError catch (e){
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx and is also not 304.
       if(e.response != null) {
         print(e.response.data);
         print(e.response.headers);

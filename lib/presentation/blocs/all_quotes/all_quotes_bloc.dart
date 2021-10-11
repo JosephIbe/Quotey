@@ -23,8 +23,10 @@ class AllQuotesBloc extends Bloc<AllQuotesEvent, AllQuotesState> {
 
   Stream<AllQuotesState> _mapGetAllQuotesEventToState(GetAllQuotesEvent event) async* {
     yield AllQuotesStateLoading();
+    var page = 0;
     try {
-      var quotes = await _repository.getAllQuotes();
+      page++;
+      var quotes = await _repository.getAllQuotes(page: page);
       if(quotes.isNotEmpty) {
         yield AllQuotesStateSuccess(quotesList: quotes);
       } else {

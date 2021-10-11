@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'package:hive/hive.dart';
 import 'package:quotey/domain/entities/quotes_entity.dart';
 
 // part 'quotes_model.g.dart';

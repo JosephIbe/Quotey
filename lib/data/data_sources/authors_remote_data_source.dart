@@ -6,7 +6,7 @@ import 'package:quotey/data/models/quotes_model.dart';
 import 'package:quotey/data/models/quotes_response_model.dart';
 
 abstract class AuthorsRemoteDataSource {
-  Future<List<AuthorsModel>> getAllAuthors();
+  Future<List<AuthorsModel>> getAllAuthors({int page});
   Future<List<QuotesModel>> getAuthorsQuotes({String authorSlug});
 }
 
@@ -19,10 +19,10 @@ class AuthorsRemoteDataSourceImpl extends AuthorsRemoteDataSource {
   List<QuotesModel> _allAuthorQuotes = [];
 
   @override
-  Future<List<AuthorsModel>> getAllAuthors() async {
-    final response = await client.get(path: '/authors');
+  Future<List<AuthorsModel>> getAllAuthors({int page}) async {
+    final response = await client.get(path: '/authors', page: page.toString());
     _allAuthors = AuthorsResponseModel.fromJson(response).results;
-    return _allAuthors;
+    return _allAuthors.length == 0 ? null : _allAuthors;
   }
 
   @override

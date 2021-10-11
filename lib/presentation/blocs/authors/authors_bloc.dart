@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:quotey/data/models/authors_model.dart';
 
 import 'package:quotey/domain/repositories/authors_repository.dart';
 
@@ -11,11 +12,14 @@ import 'package:quotey/presentation/blocs/authors/authors_state.dart';
 class AuthorsBloc extends Bloc<AuthorsEvent, AuthorsState> {
 
   final AuthorsRepository _repository;
+  List<AuthorsModel> authorsList = [];
+
+  var page = 0;
 
   AuthorsBloc(AuthorsRepository repository)
       : assert (repository != null),
       _repository = repository,
-      super (AuthorsStateInitial());
+      super (AuthorsStateLoading());
 
   @override
   Stream<AuthorsState> mapEventToState(AuthorsEvent event) async* {
@@ -25,16 +29,20 @@ class AuthorsBloc extends Bloc<AuthorsEvent, AuthorsState> {
   }
 
   Stream<AuthorsState> _mapGetAllAuthorsEventToState(GetAllAuthorsEvent event) async* {
-    yield AuthorsStateInitial();
+
+    yield AuthorsStateLoading();
 
     try {
-      var authors = await _repository.getAllAuthors();
+      page ++;
+      List<AuthorsModel> authors = await _repository.getAllAuthors(page: page);
       if(authors.isNotEmpty) {
-        yield AuthorsStateSuccess(authorsList: authors);
+        authorsList.addAll(authors);
+        yield AuthorsStateSuccess(authorsList: authorsList);
       } else {
         yield AuthorsStateSuccess(authorsList: null);
       }
     } on Exception{
+      page--;
       yield AuthorsStateFailure(reason: 'An error occurred');
     } catch (err) {
       print('err fetching authors:\n $err');

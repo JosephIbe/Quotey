@@ -13,8 +13,8 @@ class AuthorsRepositoryImpl extends AuthorsRepository {
   AuthorsRepositoryImpl({@required this.dataSource});
 
   @override
-  Future<List<AuthorsModel>> getAllAuthors() async {
-    return await dataSource.getAllAuthors();
+  Future<List<AuthorsModel>> getAllAuthors({int page}) async {
+    return await dataSource.getAllAuthors(page: page);
   }
 
   @override

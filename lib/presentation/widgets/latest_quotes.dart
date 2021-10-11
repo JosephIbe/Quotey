@@ -29,7 +29,7 @@ class _LatestQuotesState extends State<LatestQuotes> {
         child: BlocBuilder<AllQuotesBloc, AllQuotesState>(
           builder: (context, state) {
             if (state is AllQuotesStateLoading) {
-              return AppLoader(text: 'Fetching Data');
+              return AppLoader(text: 'Loading Quotes...');
             }
             if (state is AllQuotesStateSuccess) {
               return QuotesList(quotes: state.quotesList);

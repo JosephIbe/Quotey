@@ -8,7 +8,6 @@ import 'package:quotey/utils/constants.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 import 'screens/home_view.dart';
-import 'screens/favorites_view.dart';
 import 'screens/authors_view.dart';
 import 'screens/categories_view.dart';
 import 'screens/settings_view.dart';
@@ -23,7 +22,7 @@ class _LandingState extends State<Landing> {
   var currentIndex = 0;
   var _screens = [
     HomeView(),
-    FavoritesView(),
+    // FavoritesView(),
     AuthorsView(),
     CategoriesView(),
     SettingsView(),
@@ -53,12 +52,12 @@ class _LandingState extends State<Landing> {
                 activeColor: Colors.black,
                 inactiveColor: Colors.grey
             ),
-            BottomNavyBarItem(
-                icon: Icon(Icons.favorite),
-                title: Text('Favorites'),
-                activeColor: Colors.black,
-                inactiveColor: Colors.grey
-            ),
+            // BottomNavyBarItem(
+            //     icon: Icon(Icons.favorite),
+            //     title: Text('Favorites'),
+            //     activeColor: Colors.black,
+            //     inactiveColor: Colors.grey
+            // ),
             BottomNavyBarItem(
                 icon: Icon(Icons.person),
                 title: Text('Authors'),
