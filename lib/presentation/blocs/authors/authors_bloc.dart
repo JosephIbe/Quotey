@@ -8,7 +8,6 @@ import 'package:quotey/domain/repositories/authors_repository.dart';
 import 'package:quotey/presentation/blocs/authors/authors_event.dart';
 import 'package:quotey/presentation/blocs/authors/authors_state.dart';
 
-
 class AuthorsBloc extends Bloc<AuthorsEvent, AuthorsState> {
 
   final AuthorsRepository _repository;

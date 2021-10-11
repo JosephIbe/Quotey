@@ -247,21 +247,6 @@ class _QuoteItemState extends State<QuoteItem> {
               Share.shareFiles([imgFile.path.toString()]);
     });
 
-    // RenderRepaintBoundary boundary = genKey.currentContext.findRenderObject();
-    // ui.Image image = await boundary.toImage();
-    //
-    // final directory = (await getApplicationDocumentsDirectory()).path;
-    // ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    // Uint8List pngBytes = byteData.buffer.asUint8List();
-    //
-    // File imgFile =
-    //     File('$directory/${quote.content.substring(0, 10)} + photo.png');
-    // await imgFile.writeAsBytes(pngBytes);
-    //
-    // Share.shareFiles([imgFile.path.toString()]);
-    //
-    // print(imgFile.path);
-
     Navigator.pop(context);
   }
 
