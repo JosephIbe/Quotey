@@ -14,8 +14,8 @@ class AllQuotesRepositoryImpl extends AllQuotesRepository {
   }
 
   @override
-  Future<List<QuotesModel>> getQuotesInCategory({String categoryName, int page}) async {
-    return await dataSource.getQuotesInCategory(categoryName: categoryName, page: page);
+  Future<List<QuotesModel>> getQuotesInCategory({String categoryName}) async {
+    return await dataSource.getQuotesInCategory(categoryName: categoryName,);
   }
 
 }

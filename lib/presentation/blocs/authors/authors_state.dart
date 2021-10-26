@@ -7,6 +7,10 @@ import 'package:quotey/data/models/authors_model.dart';
 import 'package:quotey/data/models/quotes_model.dart';
 
 abstract class AuthorsState extends Equatable {
+
+  final List<AuthorsModel> authors;
+  AuthorsState({@required this.authors});
+
   @override
   List<Object> get props => [];
 }

@@ -8,6 +8,7 @@ import 'package:quotey/data/models/quotes_response_model.dart';
 abstract class AuthorsRemoteDataSource {
   Future<List<AuthorsModel>> getAllAuthors({int page});
   Future<List<QuotesModel>> getAuthorsQuotes({String authorSlug});
+  Future<bool> hasMorePages ({int page});
 }
 
 class AuthorsRemoteDataSourceImpl extends AuthorsRemoteDataSource {
@@ -30,6 +31,18 @@ class AuthorsRemoteDataSourceImpl extends AuthorsRemoteDataSource {
     final response = await client.get(path: '/quotes?author=$authorSlug');
     _allAuthorQuotes = QuotesResponseModel.fromJson(response).results;
     return _allAuthorQuotes;
+  }
+
+  @override
+  Future<bool> hasMorePages({String pathSegment, int page}) async {
+    final response = await client.get(path: '/authors', page: page.toString());
+    final totalPages = AuthorsResponseModel.fromJson(response).totalPages;
+    if (page < totalPages) {
+      return true;
+    } else if (page == totalPages) {
+      return false;
+    }
+    return true;
   }
 
 }

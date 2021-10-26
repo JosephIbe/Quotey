@@ -18,19 +18,21 @@ class AuthorsBloc extends Bloc<AuthorsEvent, AuthorsState> {
   AuthorsBloc(AuthorsRepository repository)
       : assert (repository != null),
       _repository = repository,
-      super (AuthorsStateLoading());
+      super (AuthorsStateInitial());
 
   @override
   Stream<AuthorsState> mapEventToState(AuthorsEvent event) async* {
-    if (event is GetAllAuthorsEvent) {
+    if (event is GetAuthorsEvent) {
       yield* _mapGetAllAuthorsEventToState(event);
     }
   }
 
-  Stream<AuthorsState> _mapGetAllAuthorsEventToState(GetAllAuthorsEvent event) async* {
-
+  Stream<AuthorsState> _mapGetAllAuthorsEventToState(GetAuthorsEvent event) async* {
     yield AuthorsStateLoading();
+    _getAllAuthors();
+  }
 
+  Stream<AuthorsState> _getAllAuthors() async* {
     try {
       page ++;
       List<AuthorsModel> authors = await _repository.getAllAuthors(page: page);

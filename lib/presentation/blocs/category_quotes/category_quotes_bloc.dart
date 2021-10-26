@@ -26,11 +26,8 @@ class CategoriesQuotesBloc extends Bloc<CategoryQuotesEvent, CategoryQuotesState
   Stream<CategoryQuotesState> _mapGetAllCategoriesEventToState(GetQuotesInCategoryEvent event) async* {
     yield CategoryQuotesStateStateLoading();
 
-    var page = 0;
-
     try {
-      page++;
-      var categoryQuotes = await _repository.getQuotesInCategory(categoryName: event.categoryName, page: page);
+      var categoryQuotes = await _repository.getQuotesInCategory(categoryName: event.categoryName, );
       if(categoryQuotes.isNotEmpty) {
         yield CategoryQuotesStateSuccess(quotesList: categoryQuotes);
       } else {

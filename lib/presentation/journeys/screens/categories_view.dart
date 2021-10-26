@@ -78,7 +78,7 @@ class _CategoriesViewState extends State<CategoriesView> {
                   ),
                   decoration: BoxDecoration(
                     color:
-                    Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                    Colors.accents[Random().nextInt(Colors.accents.length)],
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   ),
                   padding: EdgeInsets.all(10.0),

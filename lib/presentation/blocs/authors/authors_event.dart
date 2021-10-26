@@ -5,7 +5,9 @@ class AuthorsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetAllAuthorsEvent extends AuthorsEvent {}
+class GetAuthorsEvent extends AuthorsEvent {}
+
+class LoadMoreAuthorsEvent extends AuthorsEvent {}
 
 class GetQuotesByAuthorEvent extends AuthorsEvent {
 

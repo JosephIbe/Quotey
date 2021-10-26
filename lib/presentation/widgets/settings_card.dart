@@ -26,7 +26,7 @@ class SettingsCard extends StatelessWidget {
       ),
       elevation: 2.0,
       child: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(5.0),
         child: ListTile(
           onTap: onTap,
           title: Text(title, style: kSettingsCardTitleTextStyle,),

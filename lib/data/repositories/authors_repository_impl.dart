@@ -22,4 +22,9 @@ class AuthorsRepositoryImpl extends AuthorsRepository {
     return await dataSource.getAuthorsQuotes(authorSlug: authorSlug);
   }
 
+  @override
+  Future<bool> hasMorePages({int page}) async {
+    return await dataSource.hasMorePages(page: page);
+  }
+
 }

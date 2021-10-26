@@ -21,13 +21,14 @@ import 'package:quotey/presentation/journeys/landing.dart';
 import 'package:quotey/utils/router.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pedantic/pedantic.dart';
 import 'di/get_it.dart' as getIt;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   unawaited(getIt.init());
+
+  Bloc.observer = SimpleBlocObserver();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) => runApp(MultiRepositoryProvider(
@@ -62,7 +63,7 @@ void main() async {
                   BlocProvider<AuthorsBloc>(
                     create: (context) {
                       final repo = context.read<AuthorsRepository>();
-                      return AuthorsBloc(repo)..add(GetAllAuthorsEvent());
+                      return AuthorsBloc(repo)..add(GetAuthorsEvent());
                     },
                   ),
                 ],
@@ -71,6 +72,34 @@ void main() async {
             )
           )
       );
+}
+
+class SimpleBlocObserver extends BlocObserver {
+
+  @override
+  void onEvent(Bloc bloc, Object event) {
+    super.onEvent(bloc, event);
+    print(event);
+  }
+
+  @override
+  void onError(Cubit cubit, Object error, StackTrace stackTrace) {
+    super.onError(cubit, error, stackTrace);
+    print(stackTrace);
+    print(error);
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print(transition);
+  }
+
+  @override
+  void onChange(Cubit cubit, Change change) {
+    super.onChange(cubit, change);
+    print(change);
+  }
 }
 
 class Quotey extends StatelessWidget {

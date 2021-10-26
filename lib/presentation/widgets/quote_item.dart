@@ -2,9 +2,14 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:quotey/data/core/api_client.dart';
+import 'package:quotey/data/core/api_constants.dart';
+import 'package:quotey/data/models/background_image_response_model.dart';
+import 'package:quotey/data/models/background_images_model.dart';
 
 import 'package:quotey/data/models/quotes_model.dart';
 
@@ -16,28 +21,36 @@ import 'package:share_plus/share_plus.dart';
 import 'package:toast/toast.dart';
 
 class QuoteItem extends StatefulWidget {
-  final QuotesModel quote;
 
+  final QuotesModel quote;
   QuoteItem({@required this.quote});
 
   @override
   _QuoteItemState createState() => _QuoteItemState();
+
 }
 
 class _QuoteItemState extends State<QuoteItem> {
 
-  Color color = Colors.primaries[Random().nextInt(Colors.primaries.length)];
+  Color color = Colors.accents[Random().nextInt(Colors.accents.length)];
 
   final GlobalKey genKey = GlobalKey();
 
   final controller = ScreenshotController();
 
-  var isQuotePlaying;
+  final APIClient client = APIClient();
+  var image;
+  var response;
 
   @override
   void initState() {
     super.initState();
-    isQuotePlaying = false;
+    image = APIConstants.PLACEHOLDER_IMAGE;
+  }
+
+  getBackgroundImage() async {
+    response = await client.getRandomQuoteBackgroundImage();
+    setState(() => image = BackgroundResponseModel.fromJson(response).urls.regular);
   }
 
   @override
@@ -45,62 +58,34 @@ class _QuoteItemState extends State<QuoteItem> {
 
     return GestureDetector(
         onTap: () => {
-              setState(() => color =
-                  Colors.primaries[Random().nextInt(Colors.primaries.length)])
+          getBackgroundImage()
             },
         child: Card(
-            color: color,
             elevation: 4.0,
-            shadowColor: color,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(15.0)),
             ),
             child: Container(
-              margin: const EdgeInsets.all(8.0),
-              padding: const EdgeInsets.all(5.0),
               height: MediaQuery.of(context).size.height * 0.72,
               decoration: BoxDecoration(
-                color: color,
+                image: DecorationImage(image: NetworkImage(image), fit: BoxFit.cover),
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
               ),
               child: Column(
                   children: [
-                    Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.favorite_border,
-                        color: Colors.white,
-                        size: 40.0,
-                      ),
-                      onPressed: () => {},
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: Colors.white,
-                        size: 40.0,
-                      ),
-                      onPressed: () => openSheet(context, widget.quote),
-                    ),
-                  ],
-                ),
                     SizedBox( height: MediaQuery.of(context).size.height * .05, ),
                     Screenshot(
                       controller: controller,
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: color,
-                        ),
                         child: Stack(
                           children: [
-                            Icon(
-                              Icons.format_quote_sharp,
-                              color: Colors.white70.withOpacity(0.4),
-                              size: 290.0,
-                            ),
                             Column(
                               children: [
+                                Icon(
+                                  Icons.format_quote_sharp,
+                                  color: Colors.white70.withOpacity(0.4),
+                                  size: 60.0,
+                                ),
                                 SizedBox(height: 20.0,),
                                 Text(
                                   widget.quote.content ?? 'Empty Quote',
@@ -132,14 +117,6 @@ class _QuoteItemState extends State<QuoteItem> {
                                           maxLines: 3,
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: 25.0,
-                                        child: Divider(
-                                          color: Colors.white,
-                                          thickness: 2.0,
-                                          height: 1.5,
-                                        ),
-                                      ),
                                     ],
                                   ),
                                 )
@@ -154,69 +131,6 @@ class _QuoteItemState extends State<QuoteItem> {
 
             )
         )
-    );
-  }
-
-  openSheet(BuildContext context, QuotesModel quote) {
-    showModalBottomSheet(
-      context: context,
-      isDismissible: true,
-      elevation: 4.0,
-      backgroundColor: color,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-        topRight: Radius.circular(15.0),
-        topLeft: Radius.circular(15.0),
-      )),
-      builder: (context) {
-        return Container(
-          height: 200.0,
-          padding: EdgeInsets.all(5.0),
-          child: Column(
-            children: [
-              ListTile(
-                  onTap: () => copyToClipBoard(context, quote),
-                  title: Row(
-                    children: [
-                      Icon(Icons.copy, color: Colors.white),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        'Copy Text',
-                        style: kBottomSheetTextStyle,
-                      ),
-                    ],
-                  )),
-              ListTile(
-                onTap: ()=> shareQuoteAsText(quote),
-                title: Row(
-                  children: [
-                    Icon(Icons.share, color: Colors.white),
-                    SizedBox(width: 20.0,),
-                    Text('Share As Text', style: kBottomSheetTextStyle,),
-                  ],
-                ),
-              ),
-              ListTile(
-                onTap: () => takeQuotePicture(quote),
-                title: Row(
-                  children: [
-                    Icon(Icons.share, color: Colors.white),
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    Text(
-                      'Share As Image',
-                      style: kBottomSheetTextStyle,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 
