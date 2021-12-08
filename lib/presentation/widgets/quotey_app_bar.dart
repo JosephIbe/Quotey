@@ -13,21 +13,23 @@ class QuoteyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Container(
       height: height,
-      padding: EdgeInsets.fromLTRB(0, 5.0, 5.0, 0),
+      // padding: EdgeInsets.fromLTRB(0, 5.0, 5.0, 0),
       child: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0.0,
+        elevation: 1.0,
         title: Row(
           children: [
             Container(
-              width: 55.0,
-              height: 65.0,
+              width: 45.0,
+              height: 45.0,
               margin: EdgeInsets.only(right: 15.0),
               decoration: BoxDecoration(
-                color: color,
+                // color: color,
+                color: Colors.red,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20.0),
                   topLeft: Radius.circular(20.0),
+                  bottomRight: Radius.circular(20.0),
                   bottomLeft: Radius.circular(20.0),
                 )
               ),

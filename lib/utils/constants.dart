@@ -56,8 +56,8 @@ var kQuoteTagTextStyle = GoogleFonts.montserrat(
 
 var kSettingsCardTitleTextStyle = GoogleFonts.poppins(
     textStyle: TextStyle(
-  color: Colors.black54,
-  fontSize: 20.0,
+  color: Colors.black,
+  fontSize: 18.0,
   fontWeight: FontWeight.bold,
 ));
 

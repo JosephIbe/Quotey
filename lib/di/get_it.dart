@@ -17,7 +17,7 @@ import 'package:quotey/domain/repositories/categories_repository.dart';
 
 final getItInstance = GetIt.I;
 
-Future init(){
+Future<void> init(){
   getItInstance.registerLazySingleton<APIClient>(() => APIClient());
 
   getItInstance.registerLazySingleton<QuotesRemoteDataSource>(

@@ -17,7 +17,7 @@ class AppLoader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset('assets/loading.gif', height: 100.0, ),
+          Image.asset('assets/writing-2.gif', height: 100.0, ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
             child: Text(text, style: kLoadingTextStyle, textAlign: TextAlign.center,),
