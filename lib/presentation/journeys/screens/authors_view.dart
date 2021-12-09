@@ -38,10 +38,10 @@ class AuthorsView extends StatelessWidget {
               Scaffold.of(context).showSnackBar(snackbar);
             }
 
-            if(state is AuthorsStateSuccess) {
-              SnackBar snackbar = SnackBar(content: Text('Authors Loaded'));
-              Scaffold.of(context).showSnackBar(snackbar);
-            }
+            // if(state is AuthorsStateSuccess) {
+            //   SnackBar snackbar = SnackBar(content: Text('Authors Loaded'));
+            //   Scaffold.of(context).showSnackBar(snackbar);
+            // }
 
           },
           builder: (context, state){
@@ -95,7 +95,9 @@ class AuthorsGrid extends StatelessWidget {
                   context,
                   authorQuotesRoute,
                   arguments: authors[index],
-                )
+                ),
+                print(authors[index].toJson()),
+                print(authors[index].toString())
               },
               child: Container(
                   constraints: BoxConstraints(

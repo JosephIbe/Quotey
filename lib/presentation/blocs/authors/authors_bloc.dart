@@ -29,7 +29,19 @@ class AuthorsBloc extends Bloc<AuthorsEvent, AuthorsState> {
 
   Stream<AuthorsState> _mapGetAllAuthorsEventToState(GetAuthorsEvent event) async* {
     yield AuthorsStateLoading();
-    _getAllAuthors();
+    // _getAllAuthors();
+    try {
+      var authors = await _repository.getAllAuthors();
+      if(authors.isNotEmpty) {
+        yield AuthorsStateSuccess(authorsList: authors);
+      } else {
+        yield AuthorsStateSuccess(authorsList: null);
+      }
+    } on Exception{
+      yield AuthorsStateFailure(reason: 'An error occurred');
+    } catch (err) {
+      print('err fetching authors:\n $err');
+    }
   }
 
   Stream<AuthorsState> _getAllAuthors() async* {

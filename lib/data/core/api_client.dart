@@ -18,7 +18,7 @@ class APIClient {
     };
 
     try {
-      var url = APIConstants.API_BASE_URL + path + '?page=$page';
+      var url = APIConstants.API_BASE_URL + path ;
       Response response = await dio.get(url);
       print('url in client:\n $url');
       // print('API Response\t$response');

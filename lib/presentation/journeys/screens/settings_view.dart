@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:quotey/presentation/themes/app_colors.dart';
 
 import 'package:quotey/utils/constants.dart';
@@ -12,7 +16,10 @@ class SettingsView extends StatelessWidget {
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
+  final subjectController = TextEditingController();
   final messageController = TextEditingController();
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +28,7 @@ class SettingsView extends StatelessWidget {
     h = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      key: scaffoldKey,
       body: Container(
         width: w,
         height: h,
@@ -115,7 +123,7 @@ class SettingsView extends StatelessWidget {
       builder: (context) {
         return SingleChildScrollView(
           child: Container(
-              height: 450.0,
+              height: 550.0,
               padding: EdgeInsets.all(15.0),
               child: Form(
                 child: Column(
@@ -134,23 +142,31 @@ class SettingsView extends StatelessWidget {
                     TextFormField(
                       controller: emailController,
                       decoration: InputDecoration(
-                        labelText: 'Your Email',
+                        labelText: 'Email',
                         hintText: 'abc@hello.com',
+                      ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    TextFormField(
+                      controller: subjectController,
+                      decoration: InputDecoration(
+                        labelText: 'Subject',
+                        hintText: 'Feature Suggestion, Bug Fix, Crash Report',
                       ),
                     ),
                     SizedBox(height: 10.0,),
                     TextFormField(
                       controller: messageController,
                       decoration: InputDecoration(
-                        labelText: 'Your Message',
-                        hintText: 'Enter Your Message or Subject',
+                        labelText: 'Message',
+                        hintText: 'Share more details on the situation',
                       ),
                       maxLines: 5,
                       autocorrect: true,
                     ),
                     SizedBox(height: 20.0,),
                     ElevatedButton(
-                      onPressed: ()=>{},
+                      onPressed: ()=> sendEmail(context, nameController.text, emailController.text, subjectController.text, messageController.text),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.black),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25.0)))),
@@ -172,6 +188,31 @@ class SettingsView extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> sendEmail(BuildContext context, String name, String email, String subject, String message) async {
+    if(name.isEmpty || email.isEmpty || subject.isEmpty || message.isEmpty) {
+      Navigator.pop(context);
+
+      final snackbar = SnackBar(
+        duration: Duration(seconds: 2),
+        content: Text('All Fields are Required', style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.red,
+        padding: EdgeInsets.all(5.0),
+        elevation: 2.0,
+      );
+      scaffoldKey.currentState.showSnackBar(snackbar);
+    } else {
+      print(subject);
+      final Email email = Email(
+        body: message,
+        subject: subject,
+        recipients: ['joseph.ibeawuchi@gmail.com'],
+        isHTML: false,
+      );
+
+      await FlutterEmailSender.send(email);
+    }
   }
 
 }

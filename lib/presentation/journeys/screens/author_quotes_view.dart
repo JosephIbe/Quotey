@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quotey/data/models/authors_model.dart';
@@ -57,6 +58,13 @@ class AuthorQuotesList extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
         elevation: 0.0,
+        actions: [
+          IconButton(
+            padding: EdgeInsets.all(5.0),
+            onPressed: ()=> openAuthorBioDialog(context, author),
+            icon: Icon(Icons.info_outline, color: Colors.green,),
+          )
+        ],
       ),
       body: BlocBuilder<AuthorQuotesBloc, AuthorQuotesState>(
         builder: (context, state){
@@ -74,6 +82,47 @@ class AuthorQuotesList extends StatelessWidget {
       ),
     );
   }
+
+  openAuthorBioDialog(BuildContext context, AuthorsModel author) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+            title: Text('A Brief on ${author.name}'),
+            content: AnimatedContainer(
+              padding: EdgeInsets.all(10.0),
+              duration: Duration(milliseconds: 800),
+              constraints: BoxConstraints(
+                minHeight: 200.0,
+                maxWidth: 300.0,
+              ),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: Colors.blueGrey, width: 1.0),
+                )
+              ),
+              child: Text(
+                author.bio.toString(),
+                style: TextStyle(
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Close')
+              ),
+            ],
+        );
+      }
+    );
+  }
+
 }
 
 

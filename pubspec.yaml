@@ -39,6 +39,7 @@ dependencies:
   share_plus: ^2.2.0
   screenshot: ^1.2.3
   cached_network_image: any
+  flutter_email_sender: any
   hive: any
 
 dev_dependencies:
